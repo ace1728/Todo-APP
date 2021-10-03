@@ -2,6 +2,8 @@ from re import A
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import requests       #to send the request to the URL
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
@@ -49,6 +51,37 @@ def delete(sno):
     db.session.delete(todo)
     db.session.commit()
     return redirect('/')
+
+@app.route('/gallery')
+def gallery():
+    url = 'https://www.imdb.com/search/title/?count=100&groups=top_1000&sort=user_rating'
+    #request allow you to send HTTP request
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    imgsource=[]
+    images = soup.findAll('img',class_='loadlate')
+    for image in images:
+        imgsource.append(image['loadlate'])
+    return render_template('gal.html',imgsource=imgsource)
+    #return render_template('update.html')
+
+@app.route('/weather', methods=['GET', 'POST'])
+def weather():
+    weather={}
+    weather_data=[]
+    if request.method == 'POST':
+        new_city = request.form['city']
+        if new_city:
+           url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=a5c44ceda13bf8992baf1972d3289219'
+           r = requests.get(url.format(new_city)).json()
+           weather = {
+            'city' : r['name'],
+            'temperature' : r['main']['temp'],
+            'description' : r['weather'][0]['description'],
+            'icon' : r['weather'][0]['icon'],
+        }        
+        weather_data.append(weather)
+    return render_template('weather.html', weather_data=weather_data)
 
 if __name__=="__main__":
     app.run(debug=True)
