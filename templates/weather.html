@@ -37,6 +37,89 @@
           </div>
         </div>
     </nav>
+    <style>
+        *{
+          padding: 0px;
+          margin: 0px;
+          box-sizing: border-box;
+      }
+ 
+      .nav{
+          background:#ccc;
+          color: white;
+          height: 70px;
+          font-family: sans-serif;
+ 
+          display: flex;
+          flex-wrap:wrap;
+          align-items: center;
+      }
+ 
+ 
+      .nav-menu{
+          width: 70%;
+      }
+ 
+      .nav-menu ul{
+          display: flex;
+          justify-content: flex-end;
+      }
+ 
+      .nav-menu ul li{
+          padding: 10px 20px;
+          color: #ccc;
+          font-size: 20px;
+          list-style-type: none;
+          cursor: pointer;
+      }
+ 
+      .nav-menu ul li:hover{
+          color:black;
+          font-weight: bold;
+      }
+ 
+     /*style for responsive menu*/
+ 
+     @media screen and (max-width:1000px){
+         .nav{
+             height: auto;
+         }
+         .nav .nav-title{
+             text-align: left;
+             width: 100%;
+         }
+ 
+         .nav .nav-menu{
+             width: 100%;
+         }
+         .nav .nav-menu ul{
+             justify-content: space-around;
+         }
+ 
+         .nav .nav-menu ul li{
+             width: 20%;
+             padding: 10px 0px;
+             text-align: center;
+             font-size: 16px;
+         }
+     }
+ 
+     </style>
+     <div class="nav">
+       <div class="nav-menu">
+         <ul >
+           <li >
+             <a class="nav-link active" aria-current="page" href="/">Home</a>
+           </li>
+           <li >
+             <a class="nav-link" href="/gallery">IMDB GALLERY</a>
+           </li>
+           <li >
+             <a class="nav-link" href="/weather">Weather check</a>
+           </li>
+         </ul>
+       </div>
+     </div>
     <section class="hero is-primary">
         <div class="hero-body">
             <div class="container">
