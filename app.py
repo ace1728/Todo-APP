@@ -62,7 +62,34 @@ def gallery():
     images = soup.findAll('img',class_='loadlate')
     for image in images:
         imgsource.append(image['loadlate'])
-    return render_template('gal.html',imgsource=imgsource)
+    response = requests.get(url)
+    movie_data = soup.findAll('div', attrs= {'class': 'lister-item mode-advanced'})
+    movie_name=[]
+    year = []
+    desc=[]
+    dir=[]
+    actors=[]
+    duration=[]
+    rating=[]
+    for store in movie_data:
+        name = store.h3.a.text
+        movie_name.append(name)
+        year_of_release = store.h3.find('span', class_ = 'lister-item-year text-muted unbold').text.replace('(', '').replace(')', '')
+        year.append(year_of_release)
+        describe = store.find_all('p', class_ = 'text-muted')
+        description_ = describe[1].text.replace('\n', '') if len(describe) >1 else '*****'
+        desc.append(description_)
+        cast = store.find("p", class_ = '')
+        cast = cast.text.replace('\n', '').split('|')
+        cast = [x.strip() for x in cast]
+        cast = [cast[i].replace(j, "") for i,j in enumerate(["Director:", "Stars:"])]
+        dir.append(cast[0])
+        actors.append([x.strip() for x in cast[1].split(",")])
+        runtime = store.p.find('span', class_ = 'runtime').text.replace(' min', '')
+        duration.append(runtime)
+        rate = store.find('div', class_ = 'inline-block ratings-imdb-rating').text.replace('\n', '')
+        rating.append(rate)
+    return render_template('gal.html',imgsource=imgsource,movie_name=movie_name,year=year,desc=desc,dir=dir,actors=actors,duration=duration,rating=rating)
     #return render_template('update.html')
 
 @app.route('/weather', methods=['GET', 'POST'])

@@ -139,22 +139,66 @@ img {
            </ul>
          </div>
        </div>
-        <table class="image-table">
+
+       <blockquote class="blockquote" style="font-size: xx-large; text-align: center;">
+        <p>Top 100 IMdB Movies</p>
+      </blockquote>
+
+        <table class="table table-dark table-hover">
             <tbody>
+              <tr>
+                <th colspan="2">
+                    Name
+                </th>
+                <th>
+                  Year of release
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Director(S)
+                </th>
+                <th>
+                  Actor(s)
+                </th>
+                <th>
+                  Duration
+                </th>
+                <th>
+                  Rating / Metascore
+                </th>
+              </tr>
+                {% for x in range(imgsource|length) %}
                 <tr>
-                {% for img in imgsource %}
-                    <td>
-                        <img src="{{img}}" alt="watercrisis" title="water crisis">
+                <td width ="50px">
+                  <p>{{movie_name[x]}}</p>
+                </td>
+                
+                    <td width="70px">
+                        <img src="{{imgsource[x]}}" alt="watercrisis" title="water crisis">
                        </td>
-                    {% if loop.index%5==0 %}
-                    </tr>
-                    <tr>
-                        
-                    {% endif %}
-                    
-              
+                       <td>
+                        {{year[x]}}
+                      </td>
+                      <td width="250px">
+                        {{desc[x]}}
+                      </td>
+                      <td width="250px">
+                        {{dir[x]}}
+                      </td>
+                      <td width="250px">
+                        {{actors[x]}}
+                      </td>
+                      <td width="250px">
+                        {{duration[x]}} mins
+                      </td>
+                      <td width="250px">
+                        {{rating[x]}}
+                      </td>
+                      </tr>
                 {% endfor %}
-            </tr>
+            
             </tbody>
            </table>
     </body>
