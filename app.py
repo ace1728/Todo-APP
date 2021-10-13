@@ -99,7 +99,7 @@ def weather():
     if request.method == 'POST':
         new_city = request.form['city']
         if new_city:
-           url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=a5c44ceda13bf8992baf1972d3289219'
+           url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=<API-KEY>'
            r = requests.get(url.format(new_city)).json()
            weather = {
             'city' : r['name'],
